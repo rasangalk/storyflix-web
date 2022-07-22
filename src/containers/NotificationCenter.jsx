@@ -5,11 +5,42 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import { useState } from "react";
+import axios from "axios";
 
 function NotificationCenter() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization:
+        "key=AAAAhAtPPkc:APA91bEcO872Ecf4OXS3YCEtdmdafWjjf-fazyMeWhjsv9zFfdEp3V0n-hhkkCDBa3ydQucCSU1vz9bbbuACCreRR8CrTXQQlgcnKQycOvUMMuaj5acJVN32StJmxkSieiT_NyoMd6WL",
+    },
+  };
+  const url = "https://fcm.googleapis.com/fcm/send";
+
+  const data = {
+    to: "/topics/all",
+    priority: "high",
+    notification: {
+      content_available: true,
+      title: title,
+      body: body,
+      message: body,
+      priority: "high",
+      pushType: "TYPE_ONE",
+    },
+    data: {
+      content_available: true,
+      title: title,
+      body: body,
+      message: body,
+      priority: "high",
+      pushType: "TYPE_ONE",
+    },
+  };
 
   const ErrMsg = (errMsg) => {
     toast.error(errMsg, {
@@ -29,9 +60,10 @@ function NotificationCenter() {
     } else if (body === "") {
       ErrMsg("Please fill the required fields!");
     } else {
-      notify();
-      setTitle("");
-      setBody("");
+      axios
+        .post(url, data, config)
+        .then(() => notify(), setTitle(""), setBody(""))
+        .catch((err) => ErrMsg(err));
     }
   };
 
