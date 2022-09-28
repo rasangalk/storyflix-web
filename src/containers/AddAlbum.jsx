@@ -48,6 +48,7 @@ function AddAlbum() {
   const [episodeCount, setEpisodeCount] = useState("");
   const [previewText, setPreviewText] = useState("");
   const [tagline, setTagline] = useState("");
+  const [ISBN, setISBN] = useState("");
 
   /************************ Generating an Album ID ************************/
   var today = new Date();
@@ -131,7 +132,10 @@ function AddAlbum() {
       ErrMsg("Fill the required fields!");
     } else if (category == "") {
       ErrMsg("Fill the required fields!");
-    } else if (previewText == "") {
+    } else if(ISBN == ""){
+      ErrMsg("Fill the required fields!");
+    }
+    else if (previewText == "") {
       ErrMsg("Fill the required fields!");
     } else if (searchTags == "") {
       ErrMsg("Search Tags must be added!");
@@ -178,6 +182,7 @@ function AddAlbum() {
         Tagline: tagline,
         CreatedDate: CreateDate,
         ViewCount: 0,
+        ISBN : ISBN
       };
       await setDoc(doc(db, "Albums", `${AlbumID}`), data).then(navigate("/"));
     }
@@ -221,7 +226,7 @@ function AddAlbum() {
           <div className="col-start-2 col-span-10 grid grid-cols-12 border-2 border-[#E2E8F0] rounded-lg h-[36rem] overflow-y-auto">
             <div className="col-start-2 col-span-4 text-center">
               <div
-                className="w-[320px] h-[400px] bg-slate-200 mx-auto rounded-lg mt-10 drop-shadow-md flex items-center justify-center"
+                className="w-[320px] h-[450px] bg-slate-200 mx-auto rounded-lg mt-10 drop-shadow-md flex items-center justify-center"
                 style={{
                   background: imagePreview
                     ? `url('${imagePreview}')no-repeat center/cover`
@@ -266,7 +271,7 @@ function AddAlbum() {
                 onChange={(e) => setAlbumName(e.target.value)}
                 className="bg-white border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block lg:w-[25rem] sm:w-[25rem] rounded-md text-base focus:ring-1 px-3 py-1"
               />
-              <p className="after:content-['*'] after:ml-0.5 after:text-red-500 capitalize text-base text-slate-700 text-sm mb-1 mt-12 ">
+              <p className="after:content-['*'] after:ml-0.5 after:text-red-500 capitalize text-base text-slate-700 text-sm mb-1 mt-8 ">
                 Author Name
               </p>
               <input
@@ -274,7 +279,7 @@ function AddAlbum() {
                 onChange={(e) => setAuthorName(e.target.value)}
                 className="bg-white border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block lg:w-[25rem] sm:w-[25rem] rounded-md text-base focus:ring-1 px-3 py-1"
               />
-              <p className="after:content-['*'] after:ml-0.5 after:text-red-500 capitalize text-base text-slate-700 text-sm mb-1 mt-12 ">
+              <p className="after:content-['*'] after:ml-0.5 after:text-red-500 capitalize text-base text-slate-700 text-sm mb-1 mt-8 ">
                 Category
               </p>
               <select
@@ -287,7 +292,7 @@ function AddAlbum() {
                 <option value="2">Translation</option>
                 <option value="3">Other</option>
               </select>
-              <p className="after:content-['*'] after:ml-0.5 after:text-red-500 capitalize text-base text-slate-700 text-sm mb-1 mt-14 ">
+              <p className="after:content-['*'] after:ml-0.5 after:text-red-500 capitalize text-base text-slate-700 text-sm mb-1 mt-8 ">
                 Episode Count
               </p>
               <input
@@ -295,6 +300,15 @@ function AddAlbum() {
                 onChange={(e) => setEpisodeCount(e.target.value)}
                 className="bg-white border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block lg:w-[25rem] sm:w-[25rem] rounded-md text-base focus:ring-1 px-3 py-1"
               />
+              <p className="after:content-['*'] after:ml-0.5 after:text-red-500 capitalize text-base text-slate-700 text-sm mb-1 mt-8 ">
+                  ISBN
+                </p>
+                <input
+                  defaultValue={ISBN}
+                  type="text"
+                  onChange={(e) => setISBN(e.target.value)}
+                  className="bg-white border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block lg:w-[25rem] sm:w-[25rem] rounded-md text-base focus:ring-1 px-3 py-1"
+                />
             </div>
             <div className="col-start-2 col-span-10">
               <p className="after:content-['*'] after:ml-0.5 after:text-red-500 capitalize text-base text-slate-700 text-sm mb-1 mt-9 ">

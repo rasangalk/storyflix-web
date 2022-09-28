@@ -27,6 +27,7 @@ function AlbumView() {
   const [previewText, setPreviewText] = useState("");
   const [tagline, setTagline] = useState("");
   const [cat, setCat] = useState("");
+  const [ISBN, setISBN] = useState("");
 
   const navigate = useNavigate();
 
@@ -43,6 +44,7 @@ function AlbumView() {
       setEpisodeCount(doc.data().EpiCount);
       setPreviewText(doc.data().PreviewText);
       setTagline(doc.data().Tagline);
+      setISBN(doc.data().ISBN);
       categorySelector();
     });
   }, []);
@@ -153,6 +155,7 @@ function AlbumView() {
     newAuthorName,
     newCategory,
     newEpisodeCount,
+    newISBN,
     newPreviewText,
     newTagline,
     newSearchTags,
@@ -172,7 +175,10 @@ function AlbumView() {
         ErrMsg("Please select an album category!");
       } else if (episodeCount == "") {
         ErrMsg("Please fill the required fields!");
-      } else if (previewText == "") {
+      } else if(ISBN == ""){
+        ErrMsg("Please fill the required fields!");
+      }
+      else if (previewText == "") {
         ErrMsg("Please fill the required fields!");
       } else if (searchTags == "") {
         ErrMsg("Search Tags must be added!");
@@ -188,6 +194,7 @@ function AlbumView() {
           CoverURL: imagePreview,
           CreatedDate: newCreatedDate,
           EpiCount: newEpisodeCount,
+          ISBN: newISBN,
           PreviewText: newPreviewText,
           SearchTags: newSearchTags,
           Tagline: newTagline,
@@ -249,6 +256,19 @@ function AlbumView() {
 
   console.log(album);
 
+
+  const displayCategory = (cat) =>{
+    if(cat === '0'){
+      return("Novels")
+    }else if(cat === '1'){
+      return("Short Stories")
+    }else if(cat == '2'){
+      return("Translation")
+    }else if(cat == '3'){
+      return("Other")
+    }
+  }
+
   return (
     <div className="bg-[#F9F9F9] w-screen h-screen grid grid-cols-12">
       <div className="">
@@ -276,7 +296,7 @@ function AlbumView() {
             <div className="col-start-2 col-span-10 grid grid-cols-12 border-2 border-[#E2E8F0] rounded-lg h-[36rem] overflow-y-auto">
               <div className="col-start-2 col-span-4 text-center">
                 <div
-                  className="w-[320px] h-[400px] bg-slate-200 mx-auto rounded-lg mt-10 drop-shadow-md flex items-center justify-center"
+                  className="w-[320px] h-[450px] bg-slate-200 mx-auto rounded-lg mt-10 drop-shadow-md flex items-center justify-center"
                   style={{
                     background: imagePreview
                       ? `url('${imagePreview}')no-repeat center/cover`
@@ -322,7 +342,7 @@ function AlbumView() {
                   onChange={(e) => setAlbumName(e.target.value)}
                   className="bg-white border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block lg:w-[25rem] sm:w-[25rem] rounded-md text-base focus:ring-1 px-3 py-1"
                 />
-                <p className="after:content-['*'] after:ml-0.5 after:text-red-500 capitalize text-base text-slate-700 text-sm mb-1 mt-12 ">
+                <p className="after:content-['*'] after:ml-0.5 after:text-red-500 capitalize text-base text-slate-700 text-sm mb-1 mt-8 ">
                   Author Name
                 </p>
                 <input
@@ -331,7 +351,7 @@ function AlbumView() {
                   onChange={(e) => setAuthorName(e.target.value)}
                   className="bg-white border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block lg:w-[25rem] sm:w-[25rem] rounded-md text-base focus:ring-1 px-3 py-1"
                 />
-                <p className="after:content-['*'] after:ml-0.5 after:text-red-500 capitalize text-base text-slate-700 text-sm mb-1 mt-12 ">
+                <p className="after:content-['*'] after:ml-0.5 after:text-red-500 capitalize text-base text-slate-700 text-sm mb-1 mt-8 ">
                   Category
                 </p>
                 <select
@@ -340,14 +360,14 @@ function AlbumView() {
                   className="mt-1 px-3 py-1 bg-white border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block lg:w-[25rem] sm:w-[25rem] rounded-md focus:ring-1"
                 >
                   <option value={category.toString()} disabled selected hidden>
-                    {cat}
+                  {displayCategory(category.toString())}
                   </option>
                   <option value="0">Novels</option>
                   <option value="1">Short Stories</option>
                   <option value="2">Translation</option>
                   <option value="3">Other</option>
                 </select>
-                <p className="after:content-['*'] after:ml-0.5 after:text-red-500 capitalize text-base text-slate-700 text-sm mb-1 mt-14 ">
+                <p className="after:content-['*'] after:ml-0.5 after:text-red-500 capitalize text-base text-slate-700 text-sm mb-1 mt-8 ">
                   Episode Count
                 </p>
                 <input
@@ -356,6 +376,17 @@ function AlbumView() {
                   onChange={(e) => setEpisodeCount(e.target.value)}
                   className="bg-white border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block lg:w-[25rem] sm:w-[25rem] rounded-md text-base focus:ring-1 px-3 py-1"
                 />
+
+                <p className="after:content-['*'] after:ml-0.5 after:text-red-500 capitalize text-base text-slate-700 text-sm mb-1 mt-8 ">
+                  ISBN
+                </p>
+                <input
+                  defaultValue={ISBN}
+                  type="text"
+                  onChange={(e) => setISBN(e.target.value)}
+                  className="bg-white border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block lg:w-[25rem] sm:w-[25rem] rounded-md text-base focus:ring-1 px-3 py-1"
+                />
+
               </div>
               <div className="col-start-2 col-span-10">
                 <p className="after:content-['*'] after:ml-0.5 after:text-red-500 capitalize text-base text-slate-700 text-sm mb-1 mt-9 ">
@@ -445,6 +476,7 @@ function AlbumView() {
                               authorName,
                               category,
                               episodeCount,
+                              ISBN,
                               previewText,
                               tagline,
                               searchTags,
