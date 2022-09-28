@@ -190,10 +190,10 @@ function AlbumView() {
         const newFields = {
           AlbumName: newAlbumName,
           AuthorName: newAuthorName,
-          CategoryID: newCategory,
+          CategoryID: parseInt(newCategory),
           CoverURL: imagePreview,
           CreatedDate: newCreatedDate,
-          EpiCount: newEpisodeCount,
+          EpiCount: parseInt(newEpisodeCount),
           ISBN: newISBN,
           PreviewText: newPreviewText,
           SearchTags: newSearchTags,
