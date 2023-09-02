@@ -1,22 +1,24 @@
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
-import AddAlbum from "./containers/AddAlbum";
-import AddEpisode from "./containers/AddEpisode";
-import Albums from "./containers/Albums";
-import AlbumView from "./containers/AlbumView";
-import EpisodeHome from "./containers/EpisodeHome";
-import Episodes from "./containers/Episodes";
-import EpisodeView from "./containers/EpisodeView";
-import Login from "./containers/Login";
-import NotificationCenter from "./containers/NotificationCenter";
-import PrivateWrapper from "./components/HOC/privateaRoute";
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
+import AddAlbum from './containers/AddAlbum';
+import AddEpisode from './containers/AddEpisode';
+import Albums from './containers/Albums';
+import AlbumView from './containers/AlbumView';
+import EpisodeHome from './containers/EpisodeHome';
+import Episodes from './containers/Episodes';
+import EpisodeView from './containers/EpisodeView';
+import Login from './containers/Login';
+import NotificationCenter from './containers/NotificationCenter';
+import PrivateWrapper from './components/HOC/privateaRoute';
+import ServiceTerminated from './containers/ServiceTerminated';
 
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path='/' element={<ServiceTerminated />} />
+        {/* <Route path="/login" element={<Login />} /> */}
 
-        <Route path="/" element={<PrivateWrapper />}>
+        {/* <Route path="/" element={<PrivateWrapper />}>
           <Route path="/" element={<Albums />} />
         </Route>
 
@@ -50,7 +52,7 @@ function App() {
 
         <Route path="" element={<PrivateWrapper />}>
           <Route path="/notifications" element={<NotificationCenter />} />
-        </Route>
+        </Route> */}
       </Routes>
     </div>
   );
